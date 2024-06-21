@@ -26,6 +26,7 @@ var discordSettings =builder.Configuration.GetSection(nameof(DiscordSettings)).G
 
 builder.Services.AddSingleton(RestService.For<IAuthorization>(discordSettings.ApiEndpoint));
 builder.Services.AddSingleton(RestService.For<IGuildApi>(discordSettings.ApiEndpoint));
+builder.Services.AddSingleton(RestService.For<IChannelApi>(discordSettings.ApiEndpoint));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

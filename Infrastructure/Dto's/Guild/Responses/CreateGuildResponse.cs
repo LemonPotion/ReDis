@@ -1,6 +1,6 @@
 namespace Infrastructure.Dto_s.Guild;
 
-public class GetAllGuildsResponse : BaseGuildDto
+public class CreateGuildResponse : BaseGuildDto
 {
     public string Id { get; init; }
 }
