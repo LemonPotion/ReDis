@@ -22,21 +22,21 @@ public class GuildController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetGuilds()
     {
-        var guilds = await _guildApi.GetGuildsAsync(authorization: _discordSettings.AuthorizationToken);
+        var guilds = await _guildApi.GetGuildsAsync();
         return Ok(guilds);
     }
     
     [HttpGet("{guildId}")]
     public async Task<IActionResult> GetGuild(string guildId)
     {
-        var guilds = await _guildApi.GetGuildByIdAsync(authorization: _discordSettings.AuthorizationToken, guildId: guildId);
+        var guilds = await _guildApi.GetGuildByIdAsync(guildId);
         return Ok(guilds);
     }
 
     [HttpPatch]
     public async Task<IActionResult> UpdateGuild( [FromBody] UpdateGuildRequest request)
     {
-        var guild = await _guildApi.UpdateGuildAsync(authorization:_discordSettings.AuthorizationToken, guildId: request.Id, request: request);
+        var guild = await _guildApi.UpdateGuildAsync(request.Id, request);
 
         return Ok(guild);
     }
@@ -44,14 +44,14 @@ public class GuildController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> DeleteGuildAsync(string guildId)
     {
-        await _guildApi.DeleteGuildAsync(authorization: _discordSettings.AuthorizationToken, guildId: guildId);
+        await _guildApi.DeleteGuildAsync(guildId);
         return NoContent();
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateGuildAsync([FromBody] CreateGuildRequest request)
     {
-        var guild = await _guildApi.CreateGuildAsync(authorization:_discordSettings.AuthorizationToken, request: request);
+        var guild = await _guildApi.CreateGuildAsync(request: request);
         return Ok(guild);
     }
 }

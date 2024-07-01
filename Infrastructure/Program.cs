@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Infrastructure.Interfaces;
 using Infrastructure.Settings;
 using Refit;
@@ -26,10 +27,25 @@ namespace Infrastructure
 
             builder.Services.Configure<DiscordSettings>(builder.Configuration.GetSection(nameof(DiscordSettings)));
             var discordSettings =builder.Configuration.GetSection(nameof(DiscordSettings)).Get<DiscordSettings>();
-            
-            builder.Services.AddSingleton(RestService.For<IAuthorization>(discordSettings.ApiEndpoint));
-            builder.Services.AddSingleton(RestService.For<IGuildApi>(discordSettings.ApiEndpoint));
-            builder.Services.AddSingleton(RestService.For<IChannelApi>(discordSettings.ApiEndpoint));
+            builder.Services.AddRefitClient<IGuildApi>().ConfigureHttpClient(
+                x =>
+                {
+                    x.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue(discordSettings.AuthorizationToken);
+                    x.BaseAddress = new Uri(discordSettings.ApiEndpoint);
+                });
+            builder.Services.AddRefitClient<IAuthorization>().ConfigureHttpClient(
+                x =>
+                {
+                    x.BaseAddress = new Uri(discordSettings.ApiEndpoint);
+                });
+            builder.Services.AddRefitClient<IGuildApi>().ConfigureHttpClient(
+                x =>
+                {
+                    x.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue(discordSettings.AuthorizationToken);
+                    x.BaseAddress = new Uri(discordSettings.ApiEndpoint);
+                });
             
             var app = builder.Build();
 

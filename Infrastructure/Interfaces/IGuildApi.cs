@@ -9,20 +9,19 @@ namespace Infrastructure.Interfaces;
 public interface IGuildApi
 {
     [Get("/users/@me/guilds")]
-    Task<List<GetGuildResponse>> GetGuildsAsync([Header("Authorization")] string authorization);
+    Task<List<GetGuildResponse>> GetGuildsAsync();
     
     
     [Get("/guilds/{guildId}")]
-    Task<GetGuildResponse> GetGuildByIdAsync([Header("Authorization")] string authorization, string guildId);
+    Task<GetGuildResponse> GetGuildByIdAsync( string guildId);
     
     
     [Delete("/guilds/{guildId}")]
-    Task DeleteGuildAsync(string guildId, [Header("Authorization")] string authorization);
+    Task DeleteGuildAsync(string guildId);
 
     [Patch("/guilds/{guildId}")]
-    Task <UpdateGuildResponse> UpdateGuildAsync(string guildId, [Header("Authorization")] string authorization, [Body] UpdateGuildRequest request);
+    Task <UpdateGuildResponse> UpdateGuildAsync(string guildId, [Body] UpdateGuildRequest request);
 
     [Post("/guilds")]
-    Task<CreateChannelResponse> CreateGuildAsync([Body] CreateGuildRequest request,
-        [Header("Authorization")] string authorization);
+    Task<CreateChannelResponse> CreateGuildAsync([Body] CreateGuildRequest request);
 }

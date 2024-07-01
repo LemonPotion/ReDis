@@ -7,17 +7,17 @@ namespace Infrastructure.Interfaces;
 public interface IChannelApi
 {
     [Get("/guilds/{guildId}/channels")]
-    Task<List<GetChannelResponse>> GetChannelsAsync([AliasAs("guildId")] string guildId, [Header("Authorization")] string authorization);
+    Task<List<GetChannelResponse>> GetChannelsAsync([AliasAs("guildId")] string guildId);
 
     [Get("/channels/{channelId}")]
-    Task<GetChannelResponse> GetChannelByIdAsync([AliasAs("channelId")] string channelId, [Header("Authorization")] string authorization);
+    Task<GetChannelResponse> GetChannelByIdAsync([AliasAs("channelId")] string channelId);
 
     [Post("/guilds/{guildId}/channels")]
-    Task<CreateChannelResponse> CreateChannelAsync([AliasAs("guildId")] string guildId, [Header("Authorization")] string authorization, [Body] CreateChannelRequest request);
+    Task<CreateChannelResponse> CreateChannelAsync([AliasAs("guildId")] string guildId, [Body] CreateChannelRequest request);
 
     [Patch("/channels/{channelId}")]
-    Task<UpdateChannelResponse> UpdateChannelAsync([AliasAs("channelId")] string channelId, [Header("Authorization")] string authorization, [Body] UpdateChannelRequest request);
+    Task<UpdateChannelResponse> UpdateChannelAsync([AliasAs("channelId")] string channelId, [Body] UpdateChannelRequest request);
 
     [Delete("/channels/{channelId}")]
-    Task DeleteChannelAsync([AliasAs("channelId")] string channelId, [Header("Authorization")] string authorization);
+    Task DeleteChannelAsync([AliasAs("channelId")] string channelId);
 }
