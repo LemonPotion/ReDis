@@ -1,4 +1,4 @@
-namespace Infrastructure.Dto_s.Guild;
+namespace Infrastructure.Dto_s.Guild.Responses;
 
 public class GetGuildResponse : BaseGuildDto
 {

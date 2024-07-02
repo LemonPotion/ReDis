@@ -27,7 +27,7 @@ namespace Infrastructure
 
             builder.Services.Configure<DiscordSettings>(builder.Configuration.GetSection(nameof(DiscordSettings)));
             var discordSettings =builder.Configuration.GetSection(nameof(DiscordSettings)).Get<DiscordSettings>();
-            builder.Services.AddRefitClient<IGuildApi>().ConfigureHttpClient(
+            builder.Services.AddRefitClient<IChannelApi>().ConfigureHttpClient(
                 x =>
                 {
                     x.DefaultRequestHeaders.Authorization =
@@ -44,6 +44,12 @@ namespace Infrastructure
                 {
                     x.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue(discordSettings.AuthorizationToken);
+                    x.DefaultRequestHeaders.Add("accept", discordSettings.Accept);
+                    x.DefaultRequestHeaders.Add("accept-language", discordSettings.Language);
+                    x.DefaultRequestHeaders.Add("x-debug-options", discordSettings.DebugOptions);
+                    x.DefaultRequestHeaders.Add("x-discord-locale", discordSettings.Locale);
+                    x.DefaultRequestHeaders.Add("x-discord-timezone", discordSettings.Timezone);
+                    x.DefaultRequestHeaders.Add("x-super-properties", discordSettings.XSuperProperties);
                     x.BaseAddress = new Uri(discordSettings.ApiEndpoint);
                 });
             
